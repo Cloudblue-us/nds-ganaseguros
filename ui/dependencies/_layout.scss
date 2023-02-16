@@ -17,8 +17,6 @@
   }
 }
 
-
-
 // SMALL - 480px - 30rem
 @mixin mq-small-min {
   @media (min-width: pem($mq-small)) {
@@ -31,8 +29,6 @@
     @content;
   }
 }
-
-
 
 // MEDIUM - 768px - 48rem
 @mixin mq-medium-min {
@@ -47,8 +43,6 @@
   }
 }
 
-
-
 // LARGE - 1024px - 64rem
 @mixin mq-large-min {
   @media (min-width: pem($mq-large)) {
@@ -61,8 +55,6 @@
     @content;
   }
 }
-
-
 
 // HUGE - 1224px - 76.5rem
 @mixin mq-huge-min {
@@ -77,8 +69,6 @@
   }
 }
 
-
-
 // SUPER - 1824px - 114rem
 @mixin mq-super-min {
   @media (min-width: pem(1824)) {
@@ -92,7 +82,6 @@
   }
 }
 
-
 // Sizing Helper
 @mixin width($columns: $grid-columns, $breakpoint: null, $max: false) {
   $breakpoint-string: null;
@@ -100,17 +89,15 @@
   // Loop through the number of columns for each denominator of our fractions.
   @each $denominator in $columns {
     @if ($breakpoint != null) {
-      $breakpoint-string: if($max, 'max-', '') + $breakpoint + '-';
+      $breakpoint-string: if($max, "max-", "") + $breakpoint + "-";
     }
 
     @for $i from 0 through $denominator {
-
       .nds-#{$breakpoint-string}size_#{$i}-of-#{$denominator},
       .nds-#{$breakpoint-string}size--#{$i}-of-#{$denominator} {
-        @if( $i == 0) {
+        @if ($i == 0) {
           display: none;
-        }
-        @else {
+        } @else {
           width: math.div($i, $denominator) * 100%;
           flex: 0 0 math.div($i, $denominator) * 100%;
           max-width: math.div($i, $denominator) * 100%; // IE fix
@@ -120,23 +107,17 @@
   }
 }
 
-
-
 // Sizing Helper
 @mixin flex-size($span: 1, $spread: 12) {
   @if type-of($span) == number and unitless($span) == false {
     flex: 0 0 rem($span);
     max-width: rem($span);
-  }
-
-  @else {
+  } @else {
     $pct: percentage(math.div($span, $spread));
     flex: 0 0 $pct;
     max-width: $pct;
   }
 }
-
-
 
 // Wrapping Helper
 @mixin flex-wrap($wrap: true) {
@@ -144,41 +125,33 @@
     flex-wrap: wrap;
     align-items: flex-start;
     // justify-content: space-between;
-  }
-
-  @else {
+  } @else {
     flex-wrap: nowrap;
     align-items: stretch;
   }
 }
 
-
-
 // Children - Flexbox Item
 @mixin flex-item($size: expand) {
-  @if (type-of($size) == 'number') {
+  @if (type-of($size) == "number") {
     @include flex-size($size, $columns);
   }
 
   @if ($size == shrink) {
     flex: 0 0 auto;
     overflow: visible;
-  }
-
-  @else if ($size == expand) {
+  } @else if ($size == expand) {
     flex: 1 1 auto;
   }
 }
-
-
-
 
 // Truncate
 @mixin truncate {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: break-spaces;
+  // white-space: break-spaces;
+  white-space: nowrap;
 }
 
 // Break word
@@ -193,19 +166,14 @@
   hyphens: auto;
 }
 
-
-
 // Clearfix
 @mixin clearfix {
-
   &:after {
-    content: '';
+    content: "";
     display: table;
     clear: both;
   }
 }
-
-
 
 // Spacing
 @mixin spacing($property) {
@@ -213,39 +181,34 @@
   $positions: top right bottom left;
 
   @if $property == margin {
-    $prop-prefix: 'm';
-  }
-
-  @else if $property == padding {
-    $prop-prefix: 'p';
+    $prop-prefix: "m";
+  } @else if $property == padding {
+    $prop-prefix: "p";
   }
 
   @each $token, $size in $force-base-map {
     // Analyze tokens from map
     $token-string: inspect($token);
     // Remove component specific spacing tokens
-    $spacing-token: unquote(str-replace($token-string, '-spacing-', ''));
+    $spacing-token: unquote(str-replace($token-string, "-spacing-", ""));
     // Loop through index that matches the substring of "spacing" to all tokens
     // minus the component specific tokens
     @if str-index($spacing-token, spacing) {
       // Strip "spacing" from the matched token names
-      $spacing: unquote(str-replace($token, 'spacing-', ''));
+      $spacing: unquote(str-replace($token, "spacing-", ""));
 
       // scss-lint:disable ImportantRule
       @each $position in $positions {
         // Only apply !important to spacing--none utilities
         @if $size == 0 {
-
           // stylelint-disable max-nesting-depth,declaration-no-important
           .nds-#{$prop-prefix}-#{$position}_#{$spacing},
           .nds-#{$prop-prefix}-#{$position}--#{$spacing} {
             @if ($position == left) {
               #{$property}-#{$left}: 0 !important;
-            }
-            @else if ($position == right) {
+            } @else if ($position == right) {
               #{$property}-#{$right}: 0 !important;
-            }
-            @else {
+            } @else {
               #{$property}-#{$position}: 0 !important;
             }
           }
@@ -257,11 +220,9 @@
           .nds-#{$prop-prefix}-#{$position}--#{$spacing} {
             @if ($position == left) {
               #{$property}-#{$left}: $size;
-            }
-            @else if ($position == right) {
+            } @else if ($position == right) {
               #{$property}-#{$right}: $size;
-            }
-            @else {
+            } @else {
               #{$property}-#{$position}: $size;
             }
           }
@@ -294,9 +255,7 @@
   height: $size;
 }
 
-
 @mixin visibility($class-name, $min: null, $max: null) {
-
   .nds-#{$class-name} {
     /* Allow class interpolation with parent selector for easier utility class generation */
     /* stylelint-disable selector-class-pattern */
@@ -320,7 +279,6 @@
     }
 
     @if $min and $max {
-
       &-show-only {
         display: none;
 
@@ -342,7 +300,6 @@
   }
 
   @if $max {
-
     .nds-max-#{$class-name}-hide {
       @media (max-width: $max - 1) {
         display: none;
@@ -363,7 +320,6 @@
   }
 
   @if $children != null {
-
     > #{$children} {
       align-self: center;
     }
