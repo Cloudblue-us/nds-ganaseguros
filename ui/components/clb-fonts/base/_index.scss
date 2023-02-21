@@ -8,14 +8,25 @@
 }
 .clbH3,
 .clb-h3 {
+  position: relative;
   font-family: "Poppins", sans-serif;
   font-size: 20px;
   color: #333333;
   font-weight: 600 !important;
   margin-bottom: -0.3rem !important;
 }
+.clbH3,
+.clb__h3::after {
+  content: "*";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -14px;
+  color: #ff0000cc;
+}
 .clbH4,
 .clb-h4 {
+  position: relative;
   font-family: "Poppins", sans-serif;
   font-size: 18px;
   color: #01827d;
